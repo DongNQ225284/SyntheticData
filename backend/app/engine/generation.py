@@ -88,9 +88,10 @@ def sample_scene(template: TemplateModel, rng: random.Random):
     return template.background_scenes[-1]
 
 
-def fit_background(background_path: Path, width: int, height: int) -> Image.Image:
+def load_background_native(background_path: Path) -> Image.Image:
+    """Load the background image at its original pixel dimensions (no crop, no forced resize)."""
     with Image.open(background_path) as source:
-        return ImageOps.fit(source.convert("L"), (width, height), method=RESAMPLE_LANCZOS)
+        return source.convert("L").copy()
 
 
 def rotate_point(x: float, y: float, center_x: float, center_y: float, angle_radians: float) -> tuple[float, float]:
@@ -205,18 +206,20 @@ def boxes_overlap(a: tuple[int, int, int, int], b: tuple[int, int, int, int]) ->
 
 
 def generate_single_sample(scene: BackgroundSceneModel, assets: list[LoadedAsset], runtime_root: Path, rng: random.Random) -> tuple[Image.Image, list[Annotation], int, int]:
-    canvas_width = rng.randint(scene.canvas_size_range.width[0], scene.canvas_size_range.width[1])
-    canvas_height = rng.randint(scene.canvas_size_range.height[0], scene.canvas_size_range.height[1])
+    # Step 1 — load background at its native (original) resolution
     background_path = runtime_root / scene.background.image_path
-    canvas = fit_background(background_path, canvas_width, canvas_height)
-    annotations: list[Annotation] = []
-    placed_boxes: list[tuple[int, int, int, int]] = []  # tracks xyxy of placed objects
+    canvas = load_background_native(background_path)
+    native_width, native_height = canvas.size
 
+    annotations: list[Annotation] = []
+    placed_boxes: list[tuple[int, int, int, int]] = []  # tracks xyxy in native space
+
+    # Step 2 — place all objects using the native canvas dimensions
     for block in scene.blocks:
         candidates = choose_candidates(assets, block)
         if not candidates:
             continue
-        left, top, block_width, block_height = block_rect(block, canvas_width, canvas_height)
+        left, top, block_width, block_height = block_rect(block, native_width, native_height)
         for _ in range(block.capacity):
             if rng.random() < block.skip_prob:
                 continue
@@ -248,12 +251,11 @@ def generate_single_sample(scene: BackgroundSceneModel, assets: list[LoadedAsset
                     x, y = cx, cy
                     placed = True
                     break
-                # anchored blocks have no alternative positions — skip after first failed attempt
                 if block.position_anchor is not None:
                     break
 
             if not placed:
-                continue  # skip this object; no non-overlapping position found
+                continue
 
             paste_asset(canvas, augmented, x, y)
             final_box = (x, y, x + augmented.width, y + augmented.height)
@@ -270,7 +272,34 @@ def generate_single_sample(scene: BackgroundSceneModel, assets: list[LoadedAsset
                 )
             )
 
-    return canvas, annotations, canvas_width, canvas_height
+    # Step 3 — resize the fully-composed image to a random target resolution
+    target_width = rng.randint(scene.canvas_size_range.width[0], scene.canvas_size_range.width[1])
+    target_height = rng.randint(scene.canvas_size_range.height[0], scene.canvas_size_range.height[1])
+    canvas = canvas.resize((target_width, target_height), RESAMPLE_LANCZOS)
+
+    # Step 4 — scale all annotation coordinates to match the new pixel space
+    scale_x = target_width / native_width
+    scale_y = target_height / native_height
+    scaled_annotations: list[Annotation] = []
+    for ann in annotations:
+        x1, y1, x2, y2 = ann.bbox_xyxy
+        scaled_annotations.append(
+            Annotation(
+                class_id=ann.class_id,
+                class_name=ann.class_name,
+                subtype_name=ann.subtype_name,
+                block_id=ann.block_id,
+                bbox_xyxy=(
+                    int(x1 * scale_x),
+                    int(y1 * scale_y),
+                    int(x2 * scale_x),
+                    int(y2 * scale_y),
+                ),
+                polygon_xy=[(px * scale_x, py * scale_y) for px, py in ann.polygon_xy],
+            )
+        )
+
+    return canvas, scaled_annotations, target_width, target_height
 
 
 def generate_dataset(
