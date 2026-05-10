@@ -137,17 +137,34 @@ def apply_augmentation(image: Image.Image, block: BlockModel, rng: random.Random
     return transformed, polygon
 
 
-def resize_asset_to_block(image: Image.Image, block_width: int, block_height: int, anchor: str | None) -> Image.Image:
+def resize_asset_to_block(
+    image: Image.Image,
+    block_width: int,
+    block_height: int,
+    anchor: str | None,
+    rng: random.Random,
+) -> Image.Image:
+    """Resize the asset to a random fraction of the block size, preserving aspect ratio.
+
+    - Image fits within 80 % of block (small): target = random(70 %, 80 %) × block.
+    - Image exceeds 80 % of block in either dimension (large): target = random(80 %, 90 %) × block.
+
+    The constraining dimension (whichever requires the greater scale-down) is used so
+    the result never overflows the target rectangle. The anchor parameter is kept for
+    API compatibility but does not affect sizing.
+    """
     if image.width <= 0 or image.height <= 0:
         return image
-    fit_scale = min((block_width * 0.92) / image.width, (block_height * 0.92) / image.height)
-    if fit_scale <= 0:
-        fit_scale = 0.1
-    if anchor is None:
-        fit_scale *= random.uniform(0.65, 1.0)
-    target_width = max(1, int(image.width * min(fit_scale, 1.0 if fit_scale < 1 else fit_scale)))
-    target_height = max(1, int(image.height * min(fit_scale, 1.0 if fit_scale < 1 else fit_scale)))
-    return image.resize((target_width, target_height), RESAMPLE_LANCZOS)
+    is_large = image.width > block_width * 0.8 or image.height > block_height * 0.8
+    target_ratio = rng.uniform(0.80, 0.90) if is_large else rng.uniform(0.70, 0.80)
+    scale = min(
+        (block_width  * target_ratio) / image.width,
+        (block_height * target_ratio) / image.height,
+    )
+    return image.resize(
+        (max(1, int(image.width * scale)), max(1, int(image.height * scale))),
+        RESAMPLE_LANCZOS,
+    )
 
 
 def choose_candidates(assets: list[LoadedAsset], block: BlockModel) -> list[LoadedAsset]:
@@ -224,7 +241,7 @@ def generate_single_sample(scene: BackgroundSceneModel, assets: list[LoadedAsset
             if rng.random() < block.skip_prob:
                 continue
             asset = rng.choice(candidates)
-            resized = resize_asset_to_block(asset.image, block_width, block_height, block.position_anchor)
+            resized = resize_asset_to_block(asset.image, block_width, block_height, block.position_anchor, rng)
             augmented, polygon = apply_augmentation(resized, block, rng)
             if augmented.width >= block_width or augmented.height >= block_height:
                 shrink = min((block_width * 0.9) / max(1, augmented.width), (block_height * 0.9) / max(1, augmented.height))
