@@ -4,13 +4,10 @@ import json
 import shutil
 from pathlib import Path
 
-import time
-import random
 from fastapi import HTTPException, UploadFile
 
 from backend.app.core.settings import Settings
 from backend.app.engine.inventory import scan_inventory
-from backend.app.engine.generation import generate_single_sample, load_assets
 from backend.app.engine.template_defaults import default_scene, default_template, next_scene_id
 from backend.app.engine.validation import validate_template
 from backend.app.models.contracts import AssetInventoryModel, TemplateModel, WorkingTemplateSnapshotModel
@@ -153,10 +150,9 @@ class WorkspaceService:
         scene = next((item for item in template.background_scenes if item.id == scene_id), None)
         if scene is None:
             raise HTTPException(status_code=404, detail="Preview could not be generated for the selected scene.")
-        
-        assets, _ = load_assets(self.settings.assets_root)
-        rng = random.Random(int(time.time() * 1000))
-        canvas, _, _, _ = generate_single_sample(scene, assets, self.settings.runtime_root, rng)
+
+        from backend.app.engine.rendering import render_preview
+        canvas = render_preview(template, scene, self.settings.runtime_root)
 
         preview_path = self.settings.previews_root / "current.png"
         self.settings.previews_root.mkdir(parents=True, exist_ok=True)

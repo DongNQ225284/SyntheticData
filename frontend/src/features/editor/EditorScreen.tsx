@@ -43,11 +43,29 @@ const anchorOptions: AnchorValue[] = [
   "bottom_right"
 ];
 
-const classColors: Record<string, string> = {
-  figure: "#1d8fff",
-  table: "#00a86b",
-  note: "#ff8a00"
+const CLASS_COLOR_PALETTE: Record<string, string> = {
+  figure:      "#1d8fff",
+  table:       "#00a86b",
+  note:        "#ff8a00",
+  text:        "#a855f7",
+  dimension:   "#ec4899",
+  symbol:      "#14b8a6",
+  stamp:       "#f59e0b",
+  titleblock:  "#6366f1",
+  border:      "#64748b",
 };
+
+/** Return a stable color for any class name — palette first, then HSL hash. */
+function getClassColor(className: string): string {
+  if (CLASS_COLOR_PALETTE[className]) return CLASS_COLOR_PALETTE[className];
+  // Deterministic hue from class name characters
+  let hash = 0;
+  for (let i = 0; i < className.length; i++) {
+    hash = (hash * 31 + className.charCodeAt(i)) >>> 0;
+  }
+  const hue = hash % 360;
+  return `hsl(${hue}, 70%, 48%)`;
+}
 
 function runtimeAssetUrl(path: string) {
   return `/api/runtime/${path}`;
@@ -642,7 +660,7 @@ export function EditorScreen({
                     const y = block.bbox[1] * canvasHeight;
                     const width = block.bbox[2] * canvasWidth;
                     const height = block.bbox[3] * canvasHeight;
-                    const color = classColors[block.class] ?? "#1d8fff";
+                    const color = getClassColor(block.class);
                     const isSelected = block.id === selectedBlockId;
                     return (
                       <Fragment key={block.id}>
@@ -763,7 +781,7 @@ export function EditorScreen({
                   <label className="mb-3 block text-[10px] font-bold uppercase tracking-wider text-muted">Anchor Class</label>
                   <div className="space-y-2">
                     {inventory.classes.map((assetClass) => {
-                      const classColor = classColors[assetClass.name] || "#1d8fff";
+                      const classColor = getClassColor(assetClass.name);
                       const isSelected = selectedBlock.class === assetClass.name;
                       return (
                         <button 
