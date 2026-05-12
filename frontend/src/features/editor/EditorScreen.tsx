@@ -347,8 +347,15 @@ export function EditorScreen({
     if (!template || !activeScene) {
       return;
     }
-    const success = await handleSaveIfNeeded();
-    if (!success) return;
+    if (validation.has_error) {
+      pushToast("Please fix validation errors before previewing.", "error");
+      return;
+    }
+    try {
+      await saveMutation.mutateAsync(template);
+    } catch (e) {
+      return;
+    }
     await previewMutation.mutateAsync(activeScene.id);
   };
 

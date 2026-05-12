@@ -146,13 +146,23 @@ class WorkspaceService:
         return next_scenes[0].id
 
     def preview_scene(self, scene_id: str) -> Path:
+        import time
+        import random
+        from backend.app.engine.generation import generate_single_sample, load_assets
+        from backend.app.engine.rendering import overlay_blocks
+
         template = self.load_template()
         scene = next((item for item in template.background_scenes if item.id == scene_id), None)
         if scene is None:
             raise HTTPException(status_code=404, detail="Preview could not be generated for the selected scene.")
 
-        from backend.app.engine.rendering import render_preview
-        canvas = render_preview(template, scene, self.settings.runtime_root)
+        # Step 1 — generate an actual sample (background + placed objects)
+        assets, _ = load_assets(self.settings.assets_root)
+        rng = random.Random(int(time.time() * 1000))
+        canvas, _, canvas_width, canvas_height = generate_single_sample(scene, assets, self.settings.runtime_root, rng)
+
+        # Step 2 — draw colored block-region overlays on top of the generated image
+        canvas = overlay_blocks(canvas, scene, canvas_width, canvas_height)
 
         preview_path = self.settings.previews_root / "current.png"
         self.settings.previews_root.mkdir(parents=True, exist_ok=True)

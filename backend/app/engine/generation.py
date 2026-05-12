@@ -144,19 +144,15 @@ def resize_asset_to_block(
     anchor: str | None,
     rng: random.Random,
 ) -> Image.Image:
-    """Resize the asset to a random fraction of the block size, preserving aspect ratio.
+    """Resize the asset to random(95 %, 100 %) of the block size, preserving aspect ratio.
 
-    - Image fits within 80 % of block (small): target = random(70 %, 80 %) × block.
-    - Image exceeds 80 % of block in either dimension (large): target = random(80 %, 90 %) × block.
-
-    The constraining dimension (whichever requires the greater scale-down) is used so
-    the result never overflows the target rectangle. The anchor parameter is kept for
+    The constraining dimension (whichever would overflow first) is used so the
+    result never exceeds the target rectangle. The anchor parameter is kept for
     API compatibility but does not affect sizing.
     """
     if image.width <= 0 or image.height <= 0:
         return image
-    is_large = image.width > block_width * 0.8 or image.height > block_height * 0.8
-    target_ratio = rng.uniform(0.80, 0.90) if is_large else rng.uniform(0.70, 0.80)
+    target_ratio = rng.uniform(0.95, 1.0)
     scale = min(
         (block_width  * target_ratio) / image.width,
         (block_height * target_ratio) / image.height,

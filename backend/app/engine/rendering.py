@@ -51,21 +51,18 @@ def load_font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont | ImageFo
     return ImageFont.load_default()
 
 
-def render_preview(template: TemplateModel, scene: BackgroundSceneModel, runtime_root: Path) -> Image.Image:
-    """Render the layout template as a colored-overlay visualization.
+def overlay_blocks(canvas: Image.Image, scene: BackgroundSceneModel, canvas_width: int, canvas_height: int) -> Image.Image:
+    """Composite colored block-region overlays onto an already-generated canvas.
 
-    Loads the background at its native resolution (RGB), then draws one
-    semi-transparent filled rectangle per block — color-coded by class —
-    with a compact label badge in the top-left corner of each block.
+    The canvas may be grayscale (mode "L") or RGB — it is converted to RGB
+    before drawing. Block rectangles are drawn as semi-transparent fills with
+    a solid border and a small label badge, color-coded by class name.
     """
-    background_path = runtime_root / scene.background.image_path
-    with Image.open(background_path) as src:
-        canvas = src.convert("RGB").copy()
+    base = canvas.convert("RGB")
+    width, height = canvas_width, canvas_height
 
-    width, height = canvas.size
-    label_font = load_font(18, bold=True)
+    label_font = load_font(max(12, width // 200), bold=True)
 
-    # Draw overlays on a separate RGBA layer and composite at the end
     overlay = Image.new("RGBA", (width, height), (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
 
@@ -77,22 +74,31 @@ def render_preview(template: TemplateModel, scene: BackgroundSceneModel, runtime
 
         r, g, b = _get_class_color(block.class_name)
 
-        # Semi-transparent fill (alpha ~50/255 ≈ 20 %)
-        draw.rectangle((left, top, right, bottom), fill=(r, g, b, 50))
-        # Solid border (alpha 200)
-        draw.rectangle((left, top, right, bottom), outline=(r, g, b, 200), width=4)
+        draw.rectangle((left, top, right, bottom), outline=(r, g, b, 220), width=max(3, width // 800))
 
-        # Label badge
         label = f"{block.id} · {block.class_name}"
         text_w = int(draw.textlength(label, font=label_font))
-        badge_pad = 8
-        bx1, by1 = left + 10, top + 10
-        bx2, by2 = bx1 + text_w + badge_pad * 2, by1 + 30
-        draw.rounded_rectangle((bx1, by1, bx2, by2), radius=8, fill=(r, g, b, 220))
-        draw.text((bx1 + badge_pad, by1 + 6), label, font=label_font, fill=(255, 255, 255, 255))
+        pad = max(6, width // 600)
+        badge_h = max(22, width // 150)
+        bx1, by1 = left + pad, top + pad
+        bx2, by2 = bx1 + text_w + pad * 2, by1 + badge_h
+        draw.rounded_rectangle((bx1, by1, bx2, by2), radius=6, fill=(r, g, b, 220))
+        draw.text((bx1 + pad, by1 + pad // 2), label, font=label_font, fill=(255, 255, 255, 255))
 
-    # Composite the overlay on top of the RGB background
-    canvas_rgba = canvas.convert("RGBA")
-    canvas_rgba = Image.alpha_composite(canvas_rgba, overlay)
-    return canvas_rgba.convert("RGB")
+    result = Image.alpha_composite(base.convert("RGBA"), overlay)
+    return result.convert("RGB")
+
+
+def render_preview(template: TemplateModel, scene: BackgroundSceneModel, runtime_root: Path) -> Image.Image:
+    """Render a layout-only preview (no generated objects — block regions only).
+
+    Loads the background at native resolution and draws colored block overlays.
+    Useful for a fast structural view without running asset generation.
+    """
+    background_path = runtime_root / scene.background.image_path
+    with Image.open(background_path) as src:
+        canvas = src.convert("RGB").copy()
+    width, height = canvas.size
+    return overlay_blocks(canvas, scene, width, height)
+
 
