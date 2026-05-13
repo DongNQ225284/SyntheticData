@@ -107,7 +107,7 @@ Open [http://127.0.0.1:5173](http://127.0.0.1:5173) in your browser.
 ![Upload UI](demo/upload-ui.png) 
 
 ### Design layout blocks 
-![Editor UI](demo/editor-ui.png) 
+![Editor UI](demo/editor.png) 
 
 ### Preview a generated sample 
 ![Preview demo](demo/preview.png) 

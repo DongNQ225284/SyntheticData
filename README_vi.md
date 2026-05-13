@@ -110,7 +110,7 @@ Mở [http://127.0.0.1:5173](http://127.0.0.1:5173) trên trình duyệt.
 ![Editor UI](demo/editor-ui.png)
 
 ### Thiết kế bố cục
-![Editor UI](demo/editor-ui.png)
+![Editor UI](demo/editor.png)
 
 ### Xem trước một mẫu sinh ra
 ![Preview demo](demo/preview.png)
