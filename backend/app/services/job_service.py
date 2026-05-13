@@ -13,7 +13,7 @@ from fastapi import HTTPException
 from backend.app.core.settings import Settings
 from backend.app.engine.generation import generate_dataset
 from backend.app.engine.coco_converter import convert_to_coco
-from backend.app.models.contracts import ExportResponseModel, JobResponseModel, TemplateModel
+from backend.app.models.contracts import ExportResponseModel, JobResponseModel, SplitConfig, TemplateModel
 from backend.app.services.workspace_service import WorkspaceService
 
 
@@ -174,36 +174,181 @@ class JobService:
         if self._active_job_id is not None:
             self.cancel_job(self._active_job_id)
 
-    def export_job(self, job_id: str, format: str = "yolo") -> ExportResponseModel:
+    def _build_split_assignment(
+        self, image_names: list[str], split: SplitConfig
+    ) -> dict[str, str]:
+        """Deterministically assign each image to a split."""
+        import random as _random
+
+        total = len(image_names)
+        if total == 0:
+            return {}
+
+        # Normalise ratios so they always sum to 1
+        raw_total = split.train + split.valid + split.test
+        if raw_total <= 0:
+            train_r, valid_r = 1.0, 0.0
+        else:
+            train_r = split.train / raw_total
+            valid_r = split.valid / raw_total
+
+        n_valid = round(total * valid_r)
+        n_test = round(total * (1.0 - train_r - valid_r))
+        n_train = total - n_valid - n_test
+
+        # Shuffle deterministically using the job id as seed
+        rng = _random.Random(self._active_job_id or "seed")
+        shuffled = list(image_names)
+        rng.shuffle(shuffled)
+
+        assignment: dict[str, str] = {}
+        for name in shuffled[:n_train]:
+            assignment[name] = "train"
+        for name in shuffled[n_train : n_train + n_valid]:
+            assignment[name] = "valid"
+        for name in shuffled[n_train + n_valid :]:
+            assignment[name] = "test"
+        return assignment
+
+    def export_job(self, job_id: str, format: str = "yolo", split: SplitConfig | None = None) -> ExportResponseModel:
+        if split is None:
+            split = SplitConfig()
         meta = self._read_meta(job_id)
         if meta.status != "succeeded":
             raise HTTPException(status_code=400, detail="Job output is not ready for export.")
-        export_dir = self._job_dir(job_id) / f"export_{format}"
+
+        use_splits = not (split.valid == 0.0 and split.test == 0.0)
+
+        # Build a stable cache key that includes the split ratios
+        split_key = f"{split.train:.4f}_{split.valid:.4f}_{split.test:.4f}"
+        export_dir = self._job_dir(job_id) / f"export_{format}_{split_key}"
         export_dir.mkdir(parents=True, exist_ok=True)
         zip_path = export_dir / "dataset.zip"
+
         if not zip_path.exists():
             output_dir = self._job_dir(job_id) / "output"
+
+            # Build split assignment from the available images
+            images_src = output_dir / "images"
+            image_names = sorted(p.name for p in images_src.iterdir() if p.is_file()) if images_src.exists() else []
+            assignment = self._build_split_assignment(image_names, split) if use_splits else {}
+
             if format == "coco":
                 coco_dir = export_dir / "coco_output"
-                convert_to_coco(output_dir, coco_dir)
+                convert_to_coco(output_dir, coco_dir, split_assignment=assignment if use_splits else None)
                 with ZipFile(zip_path, "w", compression=ZIP_DEFLATED) as archive:
                     for path in sorted(coco_dir.rglob("*")):
                         if path.is_file():
                             archive.write(path, path.relative_to(coco_dir))
-            else:
-                with ZipFile(zip_path, "w", compression=ZIP_DEFLATED) as archive:
-                    for path in sorted(output_dir.rglob("*")):
-                        if path.is_file():
-                            archive.write(path, path.relative_to(output_dir))
-        download_url = f"/api/jobs/{job_id}/download?format={format}"
+
+            else:  # YOLO
+                if use_splits:
+                    yolo_dir = export_dir / "yolo_output"
+                    yolo_dir.mkdir(parents=True, exist_ok=True)
+                    self._build_yolo_split(output_dir, yolo_dir, assignment, split)
+                    with ZipFile(zip_path, "w", compression=ZIP_DEFLATED) as archive:
+                        for path in sorted(yolo_dir.rglob("*")):
+                            if path.is_file():
+                                archive.write(path, path.relative_to(yolo_dir))
+                else:
+                    with ZipFile(zip_path, "w", compression=ZIP_DEFLATED) as archive:
+                        for path in sorted(output_dir.rglob("*")):
+                            if path.is_file():
+                                archive.write(path, path.relative_to(output_dir))
+
+        download_url = f"/api/jobs/{job_id}/download?format={format}&split_key={split_key}"
         self._touch_meta(job_id, zip_ready=True, download_url=download_url)
         return ExportResponseModel(download_url=download_url)
 
-    def download_path(self, job_id: str, format: str = "yolo") -> Path:
+    def _build_yolo_split(
+        self,
+        output_dir: Path,
+        yolo_dir: Path,
+        assignment: dict[str, str],
+        split: SplitConfig,
+    ) -> None:
+        """Arrange images and labels into per-split subdirectories for YOLO."""
+        import shutil as _shutil
+
+        for split_name in ("train", "valid", "test"):
+            (yolo_dir / "images" / split_name).mkdir(parents=True, exist_ok=True)
+            (yolo_dir / "labels" / split_name).mkdir(parents=True, exist_ok=True)
+
+        images_src = output_dir / "images"
+        labels_src = output_dir / "labels"
+
+        for image_name, split_name in assignment.items():
+            src_img = images_src / image_name
+            if src_img.exists():
+                _shutil.copy2(src_img, yolo_dir / "images" / split_name / image_name)
+            stem = Path(image_name).stem
+            label_name = f"{stem}.txt"
+            src_lbl = labels_src / label_name
+            if src_lbl.exists():
+                _shutil.copy2(src_lbl, yolo_dir / "labels" / split_name / label_name)
+
+        # Write data.yaml
+        class_names: list[str] = []
+        data_yaml_src = output_dir / "data.yaml"
+        if data_yaml_src.exists():
+            try:
+                # The generation engine writes class names as:
+                #   names:
+                #     0: classname
+                # Parse manually to avoid pyyaml dependency.
+                raw_text = data_yaml_src.read_text(encoding="utf-8")
+                in_names = False
+                names_dict: dict[int, str] = {}
+                for raw_line in raw_text.splitlines():
+                    if raw_line.strip().startswith("names:"):
+                        in_names = True
+                        continue
+                    if in_names:
+                        stripped = raw_line.strip()
+                        if not stripped or stripped.startswith("#"):
+                            continue
+                        # Lines like "  0: classname"
+                        if ":" in stripped and not stripped.startswith("-"):
+                            idx_str, _, val = stripped.partition(":")
+                            try:
+                                names_dict[int(idx_str.strip())] = val.strip()
+                            except ValueError:
+                                in_names = False
+                        else:
+                            in_names = False
+                class_names = [names_dict[k] for k in sorted(names_dict.keys())]
+            except Exception:
+                pass
+
+
+        raw_total = split.train + split.valid + split.test
+        if raw_total <= 0:
+            raw_total = 1.0
+        train_pct = split.train / raw_total
+        valid_pct = split.valid / raw_total
+        test_pct = split.test / raw_total
+
+        lines = [
+            "path: .",
+        ]
+        if train_pct > 0:
+            lines.append("train: images/train")
+        if valid_pct > 0:
+            lines.append("val: images/valid")
+        if test_pct > 0:
+            lines.append("test: images/test")
+        lines += [
+            f"nc: {len(class_names)}",
+            "names:",
+            *[f"  {i}: {name}" for i, name in enumerate(class_names)],
+        ]
+        (yolo_dir / "data.yaml").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    def download_path(self, job_id: str, format: str = "yolo", split_key: str = "1.0000_0.0000_0.0000") -> Path:
         meta = self._read_meta(job_id)
         if meta.status != "succeeded":
             raise HTTPException(status_code=400, detail="Job has not succeeded.")
-        zip_path = self._job_dir(job_id) / f"export_{format}" / "dataset.zip"
+        zip_path = self._job_dir(job_id) / f"export_{format}_{split_key}" / "dataset.zip"
         if not zip_path.is_file():
             raise HTTPException(status_code=404, detail="Export zip not found.")
         return zip_path

@@ -155,8 +155,15 @@ class JobResponseModel(BaseModel):
     error: str | None
 
 
+class SplitConfig(BaseModel):
+    train: float = Field(default=1.0, ge=0.0, le=1.0)
+    valid: float = Field(default=0.0, ge=0.0, le=1.0)
+    test: float = Field(default=0.0, ge=0.0, le=1.0)
+
+
 class ExportRequestModel(BaseModel):
     format: Literal["yolo", "coco"]
+    split: SplitConfig = Field(default_factory=SplitConfig)
 
 
 class ExportResponseModel(BaseModel):

@@ -17,6 +17,7 @@ import {
   saveTemplate,
   uploadBackground
 } from "../../api/client";
+import type { SplitConfig } from "../../api/client";
 import { useBackgroundImage } from "../../hooks/use-background-image";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
@@ -118,6 +119,10 @@ export function EditorScreen({
   const [jobId, setJobId] = useState<string | null>(snapshot.job.active_job_id);
   const [lastCount, setLastCount] = useState<number>(0);
   const [exportFormat, setExportFormat] = useState<"yolo" | "coco">("yolo");
+  // Split state: two slider thumbs as percentages (0-100)
+  // trainEnd = boundary between train and valid, validEnd = boundary between valid and test
+  const [trainEnd, setTrainEnd] = useState(70);
+  const [validEnd, setValidEnd] = useState(90); // validEnd - trainEnd = valid %, 100 - validEnd = test %
   const backgroundInputRef = useRef<HTMLInputElement | null>(null);
   const transformerRef = useRef<Konva.Transformer | null>(null);
   const selectedRectRef = useRef<Konva.Rect | null>(null);
@@ -287,7 +292,8 @@ export function EditorScreen({
   });
 
   const exportMutation = useMutation({
-    mutationFn: ({ jobId, format }: { jobId: string; format: "yolo" | "coco" }) => exportJob(jobId, format),
+    mutationFn: ({ jobId, format, split }: { jobId: string; format: "yolo" | "coco"; split: SplitConfig }) =>
+      exportJob(jobId, format, split),
     onSuccess: (data) => {
       window.open(data.download_url, "_blank");
     },
@@ -1040,43 +1046,19 @@ export function EditorScreen({
       </Dialog>
 
       <Dialog open={successOpen}>
-        <div className="text-center">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-ink text-ink">
-            <Check strokeWidth={3} size={24} />
-          </div>
-          <h2 className="mt-5 text-2xl font-extrabold text-ink">Dataset Generated!</h2>
-          <p className="mt-2 text-sm text-muted">
-            Your synthetic object detection dataset is<br />ready for use.
-          </p>
-          
-          <div className="mt-8 flex items-center justify-between border-b border-line pb-4 mb-8">
-            <span className="text-sm font-semibold text-muted">Export Format</span>
-            <div className="flex bg-slate-50 rounded-full p-1 border border-line">
-              <button 
-                className={cn("px-4 py-1 text-xs font-bold rounded-full transition-colors", exportFormat === "yolo" ? "bg-blue-100 text-blue-600 shadow-sm" : "text-muted hover:text-ink")} 
-                onClick={() => setExportFormat("yolo")}
-              >
-                YOLO
-              </button>
-              <button 
-                className={cn("px-4 py-1 text-xs font-bold rounded-full transition-colors", exportFormat === "coco" ? "bg-blue-100 text-blue-600 shadow-sm" : "text-muted hover:text-ink")} 
-                onClick={() => setExportFormat("coco")}
-              >
-                COCO
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-8 flex gap-3">
-            <Button className="flex-1 bg-white text-ink border border-line shadow-none hover:bg-slate-50" onClick={() => setSuccessOpen(false)}>
-              Close
-            </Button>
-            <Button className="flex-1" onClick={() => jobId && exportMutation.mutate({ jobId, format: exportFormat })}>
-              <Download size={18} className="mr-2" />
-              Download Dataset
-            </Button>
-          </div>
-        </div>
+        <SuccessDialog
+          jobId={jobId}
+          lastCount={lastCount}
+          exportFormat={exportFormat}
+          setExportFormat={setExportFormat}
+          trainEnd={trainEnd}
+          setTrainEnd={setTrainEnd}
+          validEnd={validEnd}
+          setValidEnd={setValidEnd}
+          onClose={() => setSuccessOpen(false)}
+          onDownload={(split) => jobId && exportMutation.mutate({ jobId, format: exportFormat, split })}
+          isExporting={exportMutation.isPending}
+        />
       </Dialog>
     </div>
   );
@@ -1096,4 +1078,195 @@ function extractErrorMessage(error: unknown) {
     }
   }
   return "Request failed.";
+}
+
+// ---------------------------------------------------------------------------
+// SuccessDialog — train / valid / test split selector + format toggle
+// ---------------------------------------------------------------------------
+
+const SPLIT_COLORS = {
+  train: { bar: "#7c3aed", text: "text-violet-600", bg: "bg-violet-50", border: "border-violet-200", label: "Train", icon: "🧠" },
+  valid: { bar: "#0ea5e9", text: "text-sky-500",    bg: "bg-sky-50",    border: "border-sky-200",    label: "Valid", icon: "🛡" },
+  test:  { bar: "#f59e0b", text: "text-amber-500",  bg: "bg-amber-50",  border: "border-amber-200",  label: "Test",  icon: "🧪" },
+} as const;
+
+function SuccessDialog({
+  jobId,
+  lastCount,
+  exportFormat,
+  setExportFormat,
+  trainEnd,
+  setTrainEnd,
+  validEnd,
+  setValidEnd,
+  onClose,
+  onDownload,
+  isExporting,
+}: {
+  jobId: string | null;
+  lastCount: number;
+  exportFormat: "yolo" | "coco";
+  setExportFormat: (f: "yolo" | "coco") => void;
+  trainEnd: number;
+  setTrainEnd: (v: number) => void;
+  validEnd: number;
+  setValidEnd: (v: number) => void;
+  onClose: () => void;
+  onDownload: (split: SplitConfig) => void;
+  isExporting: boolean;
+}) {
+  const MIN_GAP = 5; // minimum % each boundary must be separated
+
+  const trainPct = trainEnd;
+  const validPct = validEnd - trainEnd;
+  const testPct  = 100 - validEnd;
+
+  const trainCount = Math.round((trainPct / 100) * lastCount);
+  const validCount = Math.round((validPct / 100) * lastCount);
+  const testCount  = lastCount - trainCount - validCount;
+
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  /** Convert a pointer event X to a 0-100 value clamped to the slider bounds */
+  const pxToVal = (clientX: number): number => {
+    const rect = sliderRef.current?.getBoundingClientRect();
+    if (!rect) return 0;
+    return Math.max(0, Math.min(100, Math.round(((clientX - rect.left) / rect.width) * 100)));
+  };
+
+  const startDrag = (thumb: "train" | "valid") => (e: React.PointerEvent) => {
+    e.currentTarget.setPointerCapture(e.pointerId);
+
+    const onMove = (ev: PointerEvent) => {
+      const val = pxToVal(ev.clientX);
+      if (thumb === "train") {
+        const clamped = Math.max(MIN_GAP, Math.min(val, validEnd - MIN_GAP));
+        setTrainEnd(clamped);
+      } else {
+        const clamped = Math.max(trainEnd + MIN_GAP, Math.min(val, 100 - MIN_GAP));
+        setValidEnd(clamped);
+      }
+    };
+
+    const onUp = () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+    };
+
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+  };
+
+  const handleDownload = () => {
+    const total = trainPct + validPct + testPct; // always 100
+    onDownload({
+      train: trainPct / total,
+      valid: validPct / total,
+      test:  testPct  / total,
+    });
+  };
+
+  return (
+    <div>
+      {/* Header */}
+      <div className="text-center">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border-[3px] border-ink text-ink">
+          <Check strokeWidth={3} size={24} />
+        </div>
+        <h2 className="mt-5 text-2xl font-extrabold text-ink">Dataset Generated!</h2>
+        <p className="mt-2 text-sm text-muted">
+          Your synthetic object detection dataset is<br />ready for use.
+        </p>
+      </div>
+
+      {/* Split cards */}
+      <div className="mt-8 grid grid-cols-3 gap-3">
+        {(["train", "valid", "test"] as const).map((key) => {
+          const cfg = SPLIT_COLORS[key];
+          const pct  = key === "train" ? trainPct : key === "valid" ? validPct : testPct;
+          const cnt  = key === "train" ? trainCount : key === "valid" ? validCount : testCount;
+          return (
+            <div key={key} className={cn("rounded-2xl border px-3 py-3 text-center", cfg.bg, cfg.border)}>
+              <div className="text-base mb-0.5">{cfg.icon}</div>
+              <div className={cn("text-xs font-bold uppercase tracking-wider mb-1", cfg.text)}>{cfg.label}</div>
+              <div className={cn("text-2xl font-extrabold", cfg.text)}>{pct}%</div>
+              <div className="text-[11px] text-muted font-medium mt-0.5">{cnt.toLocaleString()} IMAGES</div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Dual-range slider */}
+      <div className="mt-5 px-1" ref={sliderRef}>
+        <div className="relative h-3 rounded-full bg-slate-100 select-none" style={{ cursor: "default" }}>
+          {/* Train segment */}
+          <div
+            className="absolute top-0 h-full rounded-l-full"
+            style={{ left: 0, width: `${trainEnd}%`, backgroundColor: SPLIT_COLORS.train.bar }}
+          />
+          {/* Valid segment */}
+          <div
+            className="absolute top-0 h-full"
+            style={{ left: `${trainEnd}%`, width: `${validPct}%`, backgroundColor: SPLIT_COLORS.valid.bar }}
+          />
+          {/* Test segment */}
+          <div
+            className="absolute top-0 h-full rounded-r-full"
+            style={{ left: `${validEnd}%`, right: 0, backgroundColor: SPLIT_COLORS.test.bar }}
+          />
+
+          {/* Train/Valid thumb */}
+          <div
+            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-white border-4 shadow-md cursor-ew-resize z-10 transition-shadow hover:shadow-lg"
+            style={{ left: `${trainEnd}%`, borderColor: SPLIT_COLORS.train.bar }}
+            onPointerDown={startDrag("train")}
+          />
+
+          {/* Valid/Test thumb */}
+          <div
+            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-white border-4 shadow-md cursor-ew-resize z-10 transition-shadow hover:shadow-lg"
+            style={{ left: `${validEnd}%`, borderColor: SPLIT_COLORS.test.bar }}
+            onPointerDown={startDrag("valid")}
+          />
+        </div>
+      </div>
+
+      {/* Export format */}
+      <div className="mt-6 flex items-center justify-between border-t border-line pt-5">
+        <span className="text-sm font-semibold text-muted">Export Format</span>
+        <div className="flex bg-slate-50 rounded-full p-1 border border-line">
+          {(["yolo", "coco"] as const).map((fmt) => (
+            <button
+              key={fmt}
+              className={cn(
+                "px-4 py-1 text-xs font-bold rounded-full transition-colors uppercase",
+                exportFormat === fmt ? "bg-blue-100 text-blue-600 shadow-sm" : "text-muted hover:text-ink"
+              )}
+              onClick={() => setExportFormat(fmt)}
+            >
+              {fmt}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className="mt-5 flex gap-3">
+        <Button
+          className="flex-1 bg-white text-ink border border-line shadow-none hover:bg-slate-50"
+          onClick={onClose}
+        >
+          Close
+        </Button>
+        <Button
+          className="flex-1"
+          onClick={handleDownload}
+          disabled={isExporting}
+        >
+          <Download size={18} className="mr-2" />
+          {isExporting ? "Preparing…" : "Download Dataset"}
+        </Button>
+      </div>
+    </div>
+  );
 }

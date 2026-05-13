@@ -1,0 +1,2207 @@
+{
+  "version": 2,
+  "name": "new_layout_v2",
+  "description": "Template with multiple background scenes.",
+  "background_scenes": [
+    {
+      "id": "bg_002",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_002",
+        "name": "background_1",
+        "image_path": "backgrounds/background_1.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.3368771328361983,
+            0.7562392636280347,
+            0.6373104145601614,
+            0.1956252863032528
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.6495202147753077,
+            0.05095255771121197,
+            0.32481494835636043,
+            0.12484276593350789
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type2",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "top_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.02
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.26508087705059263,
+            0.0652540923926837,
+            0.3948564145034632,
+            0.49454478131632723
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type10"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.02
+          }
+        },
+        {
+          "id": "block_004",
+          "bbox": [
+            0.6697201526749683,
+            0.18228605172887913,
+            0.2913918167430857,
+            0.5570910321354613
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type1"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 3.0,
+            "blur_max": 0.0,
+            "noise_max": 0.03
+          }
+        },
+        {
+          "id": "block_005",
+          "bbox": [
+            0.0463184138276893,
+            0.1924205764070231,
+            0.2114511083911327,
+            0.5452965590503605
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type8"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 3.0,
+            "blur_max": 0.2,
+            "noise_max": 0.01
+          }
+        },
+        {
+          "id": "block_006",
+          "bbox": [
+            0.04041606104651163,
+            0.7548993644067796,
+            0.28488372093023256,
+            0.17966101694915254
+          ],
+          "class": "note",
+          "allowed_subtypes": [
+            "type1",
+            "type2",
+            "type3",
+            "type4"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_007",
+          "bbox": [
+            0.2671602470930233,
+            0.5735434322033899,
+            0.3953488372093023,
+            0.16440677966101694
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type4"
+          ],
+          "capacity": 2,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.01
+          }
+        }
+      ],
+      "allow_overlap": false
+    },
+    {
+      "id": "bg_001",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_001",
+        "name": "background_2",
+        "image_path": "backgrounds/background_2.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.6130297891133583,
+            0.56158841100457,
+            0.36174928805234935,
+            0.3849269915501811
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type7"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.5985555959302324,
+            0.053069626348228045,
+            0.3755813953488372,
+            0.13416795069337445
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type2",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.1961936297530961,
+            0.7032206347767536,
+            0.37797974630776,
+            0.2287811880736086
+          ],
+          "class": "note",
+          "allowed_subtypes": [
+            "type4",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_004",
+          "bbox": [
+            0.6245298809748115,
+            0.5158271074933086,
+            0.33758631363177133,
+            0.056110615521855985
+          ],
+          "class": "note",
+          "allowed_subtypes": [
+            "type1"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_005",
+          "bbox": [
+            0.6160782681040675,
+            0.3907044491525423,
+            0.3196058184430284,
+            0.0877118644067795
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type1"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_006",
+          "bbox": [
+            0.7333224814315122,
+            0.30386767686072214,
+            0.21651274062534795,
+            0.06647015475313188
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type1"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_007",
+          "bbox": [
+            0.033160441597477434,
+            0.5564439493539435,
+            0.13776705285155677,
+            0.39691083010567213
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_left",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_008",
+          "bbox": [
+            0.041578851744186046,
+            0.07354343220338982,
+            0.313953488372093,
+            0.43728813559322033
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type10",
+            "type7",
+            "type9",
+            "type1"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_009",
+          "bbox": [
+            0.6078579215116278,
+            0.20386030766396465,
+            0.12093023255813953,
+            0.16987472365512163
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_010",
+          "bbox": [
+            0.36484088382974733,
+            0.07016754443054053,
+            0.21626663350329534,
+            0.4389551653762073
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type8"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_011",
+          "bbox": [
+            0.19395562518282874,
+            0.5228249355195285,
+            0.3836185461459703,
+            0.1641488577745025
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type4"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_012",
+          "bbox": [
+            0.8113462936046514,
+            0.19904917304537997,
+            0.08488372093023254,
+            0.10661563696008751
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        }
+      ],
+      "allow_overlap": false
+    },
+    {
+      "id": "bg_003",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_003",
+        "name": "background_3",
+        "image_path": "backgrounds/background_3.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.3132851941991505,
+            0.7476569944301223,
+            0.6602512697139791,
+            0.2007311399135926
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.059689898823582846,
+            0.7497174796411546,
+            0.23488372093023255,
+            0.1864406779661017
+          ],
+          "class": "note",
+          "allowed_subtypes": [
+            "type3",
+            "type2"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.05138838597723818,
+            0.09548441497196657,
+            0.341021630343852,
+            0.6271101971349865
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type1"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "center_left",
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_004",
+          "bbox": [
+            0.3924455876183911,
+            0.11770689267465068,
+            0.38216304101503307,
+            0.49113981800080475
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type10"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "top_center",
+          "augmentation": {
+            "rotation_max": 1.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_005",
+          "bbox": [
+            0.7747050884752503,
+            0.11711015377973233,
+            0.16764403930131633,
+            0.23301126189233612
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "top_right",
+          "augmentation": {
+            "rotation_max": 4.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_006",
+          "bbox": [
+            0.7758274549072726,
+            0.38561385916872115,
+            0.16539930643726922,
+            0.22990215619910404
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_007",
+          "bbox": [
+            0.6771317592886992,
+            0.669735013247233,
+            0.2976744186046512,
+            0.07691408533021615
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_008",
+          "bbox": [
+            0.39108375275721136,
+            0.609003315600613,
+            0.2790727572490211,
+            0.12041137892854034
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_center",
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        }
+      ],
+      "allow_overlap": false
+    },
+    {
+      "id": "bg_004",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_004",
+        "name": "background_4",
+        "image_path": "backgrounds/background_4.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.29808022375673243,
+            0.7309291637378008,
+            0.6755449315290496,
+            0.2155427335016225
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.04806199184683866,
+            0.739547988115731,
+            0.23255813953488372,
+            0.19491525423728814
+          ],
+          "class": "note",
+          "allowed_subtypes": [
+            "type2",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.11085268952125733,
+            0.2906225993336237,
+            0.6779069767441862,
+            0.3690372182421806
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type6",
+            "type4"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "center_left",
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.02
+          }
+        },
+        {
+          "id": "block_004",
+          "bbox": [
+            0.703875945335211,
+            0.6558702541942077,
+            0.2697674418604652,
+            0.07583004411423247
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_005",
+          "bbox": [
+            0.7842149561442511,
+            0.32937849659030716,
+            0.17769407140517526,
+            0.24745762711864397
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type7",
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 3.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_006",
+          "bbox": [
+            0.12596896859102472,
+            0.08361578472590042,
+            0.4197674418604651,
+            0.18135593220338983
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type6",
+            "type4"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 4.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_007",
+          "bbox": [
+            0.565503852311955,
+            0.08361578472590042,
+            0.14302325581395348,
+            0.1847457627118644
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 3.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_008",
+          "bbox": [
+            0.35155036393986183,
+            0.6656496830309852,
+            0.263953488372093,
+            0.054576271186440393
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type2"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        }
+      ],
+      "allow_overlap": false
+    },
+    {
+      "id": "bg_005",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_005",
+        "name": "background_5",
+        "image_path": "backgrounds/background_5.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.3015503639398619,
+            0.724143860362935,
+            0.6720930232558141,
+            0.22402859448864304
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.05603541377374892,
+            0.5598869711665779,
+            0.12358803986710969,
+            0.335593220338983
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.20054749327415175,
+            0.7548022254038664,
+            0.10084295063374568,
+            0.14915254237288128
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 4.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_004",
+          "bbox": [
+            0.3096898988235826,
+            0.5432273469158975,
+            0.3697674418604649,
+            0.16382772307763369
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type4"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 4.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_005",
+          "bbox": [
+            0.7004414061448567,
+            0.5426116168140188,
+            0.2603574504737287,
+            0.17353375955257663
+          ],
+          "class": "note",
+          "allowed_subtypes": [
+            "type2",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_006",
+          "bbox": [
+            0.27810669271474375,
+            0.0975133792019155,
+            0.43293385407814383,
+            0.43661159070898703
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type10"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 4.0,
+            "blur_max": 0.0,
+            "noise_max": 0.02
+          }
+        },
+        {
+          "id": "block_007",
+          "bbox": [
+            0.20155036393986192,
+            0.52768358133607,
+            0.12674418604651164,
+            0.1711864406779661
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 1.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_008",
+          "bbox": [
+            0.7247572754808292,
+            0.22721625902317316,
+            0.23614431645294467,
+            0.29584989886308133
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type9",
+            "type8"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 4.0,
+            "blur_max": 0.0,
+            "noise_max": 0.03
+          }
+        },
+        {
+          "id": "block_009",
+          "bbox": [
+            0.06434106161428052,
+            0.12598866608183262,
+            0.2058139534883721,
+            0.3949152542372881
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type1"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_010",
+          "bbox": [
+            0.7131782709166061,
+            0.05310731014962924,
+            0.26046511627906976,
+            0.13050847457627118
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type2",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "top_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        }
+      ],
+      "allow_overlap": false
+    },
+    {
+      "id": "bg_006",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_006",
+        "name": "background_6",
+        "image_path": "backgrounds/background_6.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.2748004119890643,
+            0.7477566507235442,
+            0.6976859504132232,
+            0.198836912072509
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.6410852476607921,
+            0.6649717169292902,
+            0.3325581395348837,
+            0.0847457627118644
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type2"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.6468296654928251,
+            0.05130064224126641,
+            0.32688325735918994,
+            0.14090147140994597
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type2",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_004",
+          "bbox": [
+            0.6945736197538154,
+            0.20734459828522245,
+            0.2593023255813954,
+            0.42033898305084744
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type8"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 4.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_005",
+          "bbox": [
+            0.5665694000296779,
+            0.4220917228601583,
+            0.12461309061106594,
+            0.15864134407046665
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type5",
+            "type7"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 3.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_006",
+          "bbox": [
+            0.1003875732421874,
+            0.30192495181581325,
+            0.4604651162790697,
+            0.38541556412525985
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type10"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 3.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_007",
+          "bbox": [
+            0.07599370881863475,
+            0.06744004011507265,
+            0.2208807521029194,
+            0.24930064176402836
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type5",
+            "type7"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 4.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_008",
+          "bbox": [
+            0.07131780580032704,
+            0.7259886660818327,
+            0.18604651162790697,
+            0.20847457627118643
+          ],
+          "class": "note",
+          "allowed_subtypes": [
+            "type1",
+            "type2",
+            "type3",
+            "type4"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_009",
+          "bbox": [
+            0.3085814018549828,
+            0.07853103896318854,
+            0.31035652882092113,
+            0.20677966101694908
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type4",
+            "type7"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 4.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        }
+      ],
+      "allow_overlap": false
+    },
+    {
+      "id": "bg_007",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_007",
+        "name": "white",
+        "image_path": "backgrounds/white.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.0689334663644042,
+            0.061926869171678174,
+            0.4129082137555666,
+            0.22642867856607168
+          ],
+          "class": "note",
+          "allowed_subtypes": [
+            "type2",
+            "type3",
+            "type4"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.06550385231195494,
+            0.30564968303098516,
+            0.5127906976744186,
+            0.6152542372881356
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type1",
+            "type7",
+            "type10"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.6282945499863736,
+            0.3022598525225106,
+            0.3209302325581395,
+            0.6203389830508474
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type1",
+            "type10",
+            "type4",
+            "type5",
+            "type7",
+            "type8"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        }
+      ],
+      "allow_overlap": false
+    },
+    {
+      "id": "bg_008",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_008",
+        "name": "background_8",
+        "image_path": "backgrounds/background_8.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.32478178368290955,
+            0.7511279335939816,
+            0.6488859977232061,
+            0.19887400734858335
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.5806201313817223,
+            0.6649717169292901,
+            0.3802325581395349,
+            0.0711864406779661
+          ],
+          "class": "note",
+          "allowed_subtypes": [
+            "type1"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.5910852476607922,
+            0.05310731014962924,
+            0.3825581395348837,
+            0.13559322033898305
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type2",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "top_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_004",
+          "bbox": [
+            0.06201548021893163,
+            0.217809533754045,
+            0.8860465116279066,
+            0.4299175866894732
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type4",
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        }
+      ],
+      "allow_overlap": false
+    },
+    {
+      "id": "bg_009",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_009",
+        "name": "background_7",
+        "image_path": "backgrounds/background_7.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.37248059649800114,
+            0.7899828266606286,
+            0.601162790697674,
+            0.16353710257122153
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.553875945335211,
+            0.7050539374207645,
+            0.4046511627906976,
+            0.07237793189840702
+          ],
+          "class": "note",
+          "allowed_subtypes": [
+            "type1"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.6480619918468387,
+            0.051346359236135966,
+            0.3267441860465115,
+            0.1221659696235967
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type2",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "top_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_004",
+          "bbox": [
+            0.585555338858441,
+            0.1954801915055615,
+            0.3250133059767961,
+            0.5033898305084743
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type9",
+            "type7"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_005",
+          "bbox": [
+            0.0689922244049782,
+            0.09209036099708687,
+            0.4941860465116279,
+            0.6745762711864407
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type1",
+            "type10",
+            "type7"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_006",
+          "bbox": [
+            0.04573641045148982,
+            0.7700564626920021,
+            0.1,
+            0.13559322033898305
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_007",
+          "bbox": [
+            0.20620152673055958,
+            0.8107344287936971,
+            0.09767441860465116,
+            0.12542372881355932
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 3.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        }
+      ],
+      "allow_overlap": false
+    },
+    {
+      "id": "bg_010",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_010",
+        "name": "background_9",
+        "image_path": "backgrounds/background_9.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.09113499271737711,
+            0.09034472508686245,
+            0.4510633005845045,
+            0.6560336447018046
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type1",
+            "type10",
+            "type7"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 3.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.5794305672249539,
+            0.1258663960759299,
+            0.06749540738330086,
+            0.6290580993338392
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type9",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.3537968025128559,
+            0.7999232924559203,
+            0.6187629368074995,
+            0.14704600148911387
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_004",
+          "bbox": [
+            0.6573643174282338,
+            0.7120177217719051,
+            0.31627906976744175,
+            0.08726392251816
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type2"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_005",
+          "bbox": [
+            0.6596898988235829,
+            0.05141239489539195,
+            0.3127906976744186,
+            0.11864406779661017
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type2",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_006",
+          "bbox": [
+            0.6738222665576379,
+            0.2381604307191728,
+            0.2880143342993317,
+            0.43497850462362425
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type1",
+            "type10",
+            "type5",
+            "type9"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        }
+      ],
+      "allow_overlap": false
+    },
+    {
+      "id": "bg_011",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_011",
+        "name": "background_10",
+        "image_path": "backgrounds/background_10.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.03294571277707122,
+            0.6853106999801377,
+            0.9430232558139535,
+            0.26440677966101694
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.6317829220793968,
+            0.04802256438691737,
+            0.34069767441860466,
+            0.1423728813559322
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type2",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "top_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.22734345275225212,
+            0.18871924509608326,
+            0.485623124700801,
+            0.4847083334969228
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type1",
+            "type10",
+            "type4"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        }
+      ],
+      "allow_overlap": false
+    },
+    {
+      "id": "bg_012",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_012",
+        "name": "background_11",
+        "image_path": "backgrounds/background_11.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.24573641045148983,
+            0.7242937508275953,
+            0.727906976744186,
+            0.22542372881355932
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "bottom_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.5864340848700945,
+            0.04802256438691737,
+            0.3872093023255814,
+            0.14915254237288136
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type3",
+            "type2"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "top_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.08888013557195894,
+            0.19887002201403592,
+            0.5672009218520849,
+            0.2559322033898304
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type4",
+            "type2"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_004",
+          "bbox": [
+            0.08889771447612614,
+            0.46666663218352744,
+            0.5671657640437506,
+            0.2220338983050848
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type2",
+            "type4"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 3.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_005",
+          "bbox": [
+            0.6701550151026526,
+            0.2141242593021716,
+            0.2558139534883721,
+            0.4711864406779661
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type8"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 2.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        }
+      ],
+      "allow_overlap": false
+    },
+    {
+      "id": "bg_013",
+      "scene_weight": 1.0,
+      "canvas_size_range": {
+        "width": [
+          3200,
+          3500
+        ],
+        "height": [
+          2000,
+          2400
+        ]
+      },
+      "background": {
+        "id": "bg_013",
+        "name": "background_12",
+        "image_path": "backgrounds/background_12.png"
+      },
+      "blocks": [
+        {
+          "id": "block_001",
+          "bbox": [
+            0.03178292207939681,
+            0.6365510187589007,
+            0.9418604651162786,
+            0.31107868447637205
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type6"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_002",
+          "bbox": [
+            0.5410852476607921,
+            0.05141239489539195,
+            0.4325581395348837,
+            0.16440677966101694
+          ],
+          "class": "table",
+          "allowed_subtypes": [
+            "type2",
+            "type3"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": "top_right",
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_003",
+          "bbox": [
+            0.3527131546375362,
+            0.23768068394142175,
+            0.30348837209302315,
+            0.36644647275539804
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type1",
+            "type10",
+            "type5",
+            "type7",
+            "type8"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_004",
+          "bbox": [
+            0.6701550151026526,
+            0.2581920559123411,
+            0.21511627906976744,
+            0.33728813559322035
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type1",
+            "type10",
+            "type7",
+            "type8",
+            "type5"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_005",
+          "bbox": [
+            0.12015501510265261,
+            0.24971747964115465,
+            0.2255813953488372,
+            0.34067796610169493
+          ],
+          "class": "figure",
+          "allowed_subtypes": [
+            "type1",
+            "type10",
+            "type5",
+            "type8",
+            "type7"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        },
+        {
+          "id": "block_006",
+          "bbox": [
+            0.056201526730559594,
+            0.08192086947166313,
+            0.1941860465116279,
+            0.15254237288135594
+          ],
+          "class": "note",
+          "allowed_subtypes": [
+            "type2",
+            "type4"
+          ],
+          "capacity": 1,
+          "skip_prob": 0.0,
+          "position_anchor": null,
+          "augmentation": {
+            "rotation_max": 0.0,
+            "blur_max": 0.0,
+            "noise_max": 0.0
+          }
+        }
+      ],
+      "allow_overlap": false
+    }
+  ]
+}

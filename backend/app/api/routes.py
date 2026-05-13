@@ -18,6 +18,7 @@ from backend.app.models.contracts import (
     PreviewResponseModel,
     ResetResponseModel,
     SaveTemplateRequestModel,
+    SplitConfig,
     UploadResponseModel,
     ValidateTemplateRequestModel,
     ValidationResultModel,
@@ -168,9 +169,18 @@ def export_job(
     payload: ExportRequestModel,
     jobs: JobService = Depends(get_job_service),
 ) -> ExportResponseModel:
-    return jobs.export_job(job_id, payload.format)
+    return jobs.export_job(job_id, payload.format, payload.split)
 
 
 @router.get("/jobs/{job_id}/download")
-def download_job(job_id: str, format: str = "yolo", jobs: JobService = Depends(get_job_service)) -> FileResponse:
-    return FileResponse(jobs.download_path(job_id, format), media_type="application/zip", filename=f"{job_id}_{format}.zip")
+def download_job(
+    job_id: str,
+    format: str = "yolo",
+    split_key: str = "1.0000_0.0000_0.0000",
+    jobs: JobService = Depends(get_job_service),
+) -> FileResponse:
+    return FileResponse(
+        jobs.download_path(job_id, format, split_key),
+        media_type="application/zip",
+        filename=f"{job_id}_{format}.zip",
+    )

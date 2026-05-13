@@ -106,13 +106,19 @@ export async function cancelJob(jobId: string) {
   return parseResponse<{ ok: boolean }>(response);
 }
 
-export async function exportJob(jobId: string, format: "yolo" | "coco") {
+export interface SplitConfig {
+  train: number;
+  valid: number;
+  test: number;
+}
+
+export async function exportJob(jobId: string, format: "yolo" | "coco", split: SplitConfig) {
   const response = await fetch(`/api/jobs/${jobId}/export`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ format })
+    body: JSON.stringify({ format, split })
   });
   return parseResponse<{ download_url: string }>(response);
 }
