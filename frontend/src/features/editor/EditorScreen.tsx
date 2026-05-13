@@ -1115,8 +1115,6 @@ function SuccessDialog({
   onDownload: (split: SplitConfig) => void;
   isExporting: boolean;
 }) {
-  const MIN_GAP = 5; // minimum % each boundary must be separated
-
   const trainPct = trainEnd;
   const validPct = validEnd - trainEnd;
   const testPct  = 100 - validEnd;
@@ -1140,10 +1138,12 @@ function SuccessDialog({
     const onMove = (ev: PointerEvent) => {
       const val = pxToVal(ev.clientX);
       if (thumb === "train") {
-        const clamped = Math.max(MIN_GAP, Math.min(val, validEnd - MIN_GAP));
+        // trainEnd can be [0, validEnd] — thumbs may touch but not cross
+        const clamped = Math.max(0, Math.min(val, validEnd));
         setTrainEnd(clamped);
       } else {
-        const clamped = Math.max(trainEnd + MIN_GAP, Math.min(val, 100 - MIN_GAP));
+        // validEnd can be [trainEnd, 100]
+        const clamped = Math.max(trainEnd, Math.min(val, 100));
         setValidEnd(clamped);
       }
     };
