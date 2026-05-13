@@ -88,7 +88,7 @@ def convert_to_coco(
 
                 img_id = split_img_id[split]
                 split_data[split]["images"].append(
-                    {"id": img_id, "file_name": image_name, "width": width, "height": height}
+                    {"id": img_id, "file_name": f"images/{split}/{image_name}", "width": width, "height": height}
                 )
 
                 for ann in annotations_raw:
@@ -132,7 +132,7 @@ def convert_to_coco(
                     shutil.copy2(image_full_path, images_dir / image_name)
 
                 coco_format["images"].append(
-                    {"id": image_id, "file_name": image_name, "width": width, "height": height}
+                    {"id": image_id, "file_name": f"images/{image_name}", "width": width, "height": height}
                 )
 
                 for ann in annotations_raw:
