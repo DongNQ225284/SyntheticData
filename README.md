@@ -110,7 +110,7 @@ Open [http://127.0.0.1:5173](http://127.0.0.1:5173) in your browser.
 ![Editor UI](demo/editor-ui.png) 
 
 ### Preview a generated sample 
-![Preview demo](demo/preview-demo.png) 
+![Preview demo](demo/preview.png) 
 
 ### Configure and launch generation 
 ![Generate UI](demo/generate-ui.png) 

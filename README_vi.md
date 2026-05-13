@@ -113,7 +113,7 @@ Mở [http://127.0.0.1:5173](http://127.0.0.1:5173) trên trình duyệt.
 ![Editor UI](demo/editor-ui.png)
 
 ### Xem trước một mẫu sinh ra
-![Preview demo](demo/preview-demo.png)
+![Preview demo](demo/preview.png)
 
 ### Cấu hình và bắt đầu generate
 ![Generate UI](demo/generate-ui.png)
